@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elecciones Regionales Lima Provincias 2026</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#070b14;color:#f5f7ff;overflow-x:hidden;
+  }
+  body:before{
+    content:"";position:fixed;inset:0;z-index:-2;
+    background:
+      radial-gradient(circle at 15% 20%,rgba(0,180,255,.18),transparent 28%),
+      radial-gradient(circle at 85% 70%,rgba(128,70,255,.20),transparent 30%),
+      linear-gradient(135deg,#050812,#10172a 55%,#070b14);
+  }
+  .orb{position:fixed;border-radius:50%;filter:blur(5px);opacity:.35;z-index:-1;animation:float 8s ease-in-out infinite}
+  .orb.a{width:180px;height:180px;background:#00c6ff;left:-50px;top:18%}
+  .orb.b{width:230px;height:230px;background:#8d5cff;right:-70px;top:55%;animation-delay:2s}
+  @keyframes float{50%{transform:translateY(-30px) translateX(15px)}}
+
+  nav{
+    position:fixed;top:0;left:0;width:100%;z-index:20;
+    backdrop-filter:blur(15px);background:rgba(5,8,18,.75);
+    border-bottom:1px solid rgba(255,255,255,.1);
+    display:flex;justify-content:space-between;align-items:center;padding:15px 7%;
+  }
+  .logo{font-weight:800;letter-spacing:1px;color:#62dcff}
+  nav a{color:#fff;text-decoration:none;margin-left:14px;font-size:13px;transition:.2s} nav a:hover{color:#62dcff}
+  nav a:hover{color:#62dcff}
+
+  header{
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    text-align:center;padding:110px 20px 70px;position:relative;
+  }
+  .hero{max-width:1050px}
+  .tag{
+    display:inline-block;padding:8px 14px;border:1px solid rgba(98,220,255,.35);
+    border-radius:30px;color:#62dcff;background:rgba(98,220,255,.07);font-size:13px;
+    margin-bottom:22px;animation:pulse 2.5s infinite;
+  }
+  @keyframes pulse{50%{box-shadow:0 0 25px rgba(98,220,255,.15)}}
+  h1{
+    font-size:clamp(42px,8vw,88px);line-height:.95;
+    background:linear-gradient(90deg,#fff,#62dcff,#a98cff,#fff);
+    background-size:250%;-webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:shine 7s linear infinite;
+  }
+  @keyframes shine{to{background-position:250%}}
+  .subtitle{font-size:20px;color:#b9c1d6;margin:25px auto;max-width:760px;line-height:1.6}
+  .btn{
+    display:inline-block;padding:14px 24px;border-radius:12px;text-decoration:none;
+    background:linear-gradient(90deg,#00b8ff,#8064ff);color:#fff;font-weight:700;
+    box-shadow:0 10px 30px rgba(55,130,255,.22);transition:.25s
+  }
+  .btn:hover{transform:translateY(-4px) scale(1.02)}
+
+  section{padding:90px 7%;max-width:1250px;margin:auto}
+  .section-title{text-align:center;font-size:40px;margin-bottom:15px}
+  .section-sub{text-align:center;color:#aeb7cb;max-width:750px;margin:0 auto 45px;line-height:1.6}
+
+  .candidate-sections{display:block}.candidate-section{display:none}.candidate-section.active{display:block}
+  .candidate-section{
+    scroll-margin-top:95px;padding:32px;border-radius:24px;
+    background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.025));
+    border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(12px);
+    box-shadow:0 18px 45px rgba(0,0,0,.18);
+    animation:sectionIn .7s ease both;
+  }
+  @keyframes sectionIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  .candidate-header{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:24px}
+  .candidate-visual{display:flex;align-items:center;gap:22px;margin-bottom:26px}
+  .candidate-photo{width:150px;height:150px;border-radius:20px;object-fit:cover;object-position:center;
+    border:2px solid rgba(98,220,255,.35);box-shadow:0 12px 30px rgba(0,0,0,.3)}
+  .party-logo{width:90px;height:90px;border-radius:16px;object-fit:contain;background:white;padding:7px;
+    border:1px solid rgba(255,255,255,.2)}
+
+  .candidate-number{color:#62dcff;font-weight:800;font-size:13px;letter-spacing:1px}
+  .candidate-section h3{font-size:32px;margin:7px 0}
+  .candidate-party{color:#aeb7cb;font-size:16px}
+  .candidate-content{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .candidate-box{padding:22px;border-radius:17px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08)}
+  .candidate-box h4{margin-bottom:12px;font-size:18px}
+  .candidate-box p,.candidate-box li{color:#c8cede;line-height:1.6;font-size:15px}
+  .candidate-box ul{padding-left:20px}
+  .positive{border-top:3px solid #35e0a1}
+  .questioning{border-top:3px solid #ffb84d}
+  .themes{border-top:3px solid #8e7dff}
+  .candidate-source{margin-top:20px;color:#8f9ab0;font-size:12px;line-height:1.5}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px}
+  .card{
+    position:relative;padding:25px;border-radius:20px;cursor:pointer;
+    background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.025));
+    border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(12px);
+    transition:.35s;overflow:hidden;
+  }
+  .card:after{
+    content:"";position:absolute;width:100px;height:100px;border-radius:50%;
+    background:#62dcff;filter:blur(55px);opacity:.12;right:-35px;top:-35px
+  }
+  .card:hover{transform:translateY(-10px);border-color:rgba(98,220,255,.55);box-shadow:0 20px 45px rgba(0,0,0,.28)}
+  .number{font-size:13px;color:#62dcff;font-weight:bold}
+  .card h3{font-size:22px;margin:12px 0 8px}
+  .party{color:#aeb7cb;font-size:14px;min-height:40px}
+  .open{margin-top:18px;color:#62dcff;font-size:14px;font-weight:bold}
+
+  .info{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:35px
+  }
+  .box{padding:22px;border-radius:18px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.09)}
+  .box h3{margin-bottom:10px}
+  .box p,.box li{color:#c4cbdb;line-height:1.6;font-size:15px}
+  .box ul{padding-left:20px}
+  .modal-box ul{padding-left:20px}
+  .source{margin-top:22px;font-size:12px;color:#8f9ab0}
+
+  footer{text-align:center;padding:45px 20px;border-top:1px solid rgba(255,255,255,.1);color:#8993aa}
+  .disclaimer{max-width:850px;margin:auto;line-height:1.6;font-size:13px}
+
+  @media(max-width:900px){
+    .candidate-visual{flex-wrap:wrap}
+
+    nav{overflow-x:auto;justify-content:flex-start;gap:8px}
+    nav .links{white-space:nowrap}
+    .candidate-content{grid-template-columns:1fr}
+    .candidate-header{flex-direction:column}
+  }
+  @media(max-width:700px){
+    nav .links{display:none}
+    .info,.modal-grid{grid-template-columns:1fr}
+    section{padding:70px 5%}
+    h1{font-size:48px}
+  }
+</style>
+</head>
+<body>
+<div class="orb a"></div><div class="orb b"></div>
+
+<nav>
+  <div class="logo">LIMA 2026</div>
+  <div class="links">
+    <a href="#inicio" onclick="showHome(); return false;">Inicio</a>
+    <a href="#" onclick="showOnlyCandidate(1); return false;">Candidato 1</a>
+    <a href="#" onclick="showOnlyCandidate(2); return false;">Candidato 2</a>
+    <a href="#" onclick="showOnlyCandidate(3); return false;">Candidato 3</a>
+    <a href="#" onclick="showOnlyCandidate(4); return false;">Candidato 4</a>
+    <a href="#" onclick="showOnlyCandidate(5); return false;">Candidato 5</a>
+  </div>
+</nav>
+
+<header id="inicio">
+  <div class="hero">
+    <div class="tag">ELECCIONES REGIONALES Y MUNICIPALES · 4 DE OCTUBRE DE 2026</div>
+    <h1>ELECCIONES REGIONALES<br>LIMA PROVINCIA<br>2026</h1>
+    <p class="subtitle">Una página interactiva con información de hoja de vida de las candidaturas al Gobierno Regional de Lima, basada en los datos proporcionados del JNE Voto Informado.</p>
+    <a class="btn" href="#candidatos">VER CANDIDATOS ↓</a>
+  </div>
+</header>
+
+<section id="candidatos">
+  <h2 class="section-title">Candidatos regionales</h2>
+  <p class="section-sub">
+    Selecciona un candidato desde el menú superior para consultar sus datos personales y su hoja de vida.
+  </p>
+  <div class="candidate-sections" id="candidateSections"></div>
+</section>
+
+
+
+<footer>
+  <p class="disclaimer">
+    Página educativa. No constituye propaganda ni recomienda una candidatura.
+    La información electoral puede cambiar durante el proceso; verifica siempre
+    la situación oficial de cada candidatura en el JNE/ONPE.
+  </p>
+</footer>
+
+<script>
+const candidatos = [
+  {
+    name:"José Carlos Bautista Rubio", party:"Partido Político PRIN", image:"https://voz-electoral.vercel.app/fotos/356092.jpg", logo:"https://voz-electoral.vercel.app/simbolos/PARTIDO_POLITICO_PRIN.jpg",
+    personal:["Cargo al que postula: Gobernador Regional","DNI: 40874292","Sexo: Hombre","Fecha de nacimiento: 30/05/1980 (46 años)","Lugar de nacimiento: Lima, Lima, Jesús María — Perú","Postula en: Lima"],
+    education:["Educación básica: Sí. Primaria concluida y secundaria concluida.","Estudios técnicos: No registra en la captura proporcionada.","Estudios no universitarios: No registra en la captura proporcionada.","Estudios universitarios: Abogado — Universidad Nacional Mayor de San Marcos. Concluido, egresado. Bachiller: 2006.","Estudios universitarios: Bachiller en Derecho y Ciencia Política — Universidad Nacional Mayor de San Marcos. Concluido, egresado. Bachiller: 2004.","Estudios de posgrado: Maestría en Derecho con Mención en Constitucional y Administrativo — Universidad José Faustino Sánchez Carrión. No concluido.","Estudios de posgrado: Maestría en Derecho con Mención en Ciencias Penales y Criminológicas — Universidad José Faustino Sánchez Carrión. No concluido."],
+    work:["Abogado Independiente — Abogado — 2022-2026 — Av. Panamericana Norte N° 1968 — Lima, Huaura, Santa María.","Ministerio Público - Fiscalía de la Nación — Fiscal Provincial Provisional de la Fiscalía Provincial de Prevención del Delito — 2016-2021 — Av. Arámbulo la Rosa S/N — Lima, Huaura, Huacho."],
+    political:["Renuncias a organizaciones políticas: Patria Joven — renunció en 2024.","Renuncias a organizaciones políticas: Partido Político Perú Primero — renunció en 2024.","Cargos partidarios: no se muestran en las capturas proporcionadas."],
+    sentences:["No tiene sentencias firmes según su declaración jurada de hoja de vida."],
+    income:["Año declarado: 2025.","Remuneración bruta anual: sector público S/ 0.00; sector privado S/ 0.00; total S/ 0.00.","Renta bruta anual por ejercicio individual: sector público S/ 15,000.00; sector privado S/ 23,500.00; total S/ 38,500.00.","Otros ingresos anuales: sector público S/ 0.00; sector privado S/ 0.00; total S/ 0.00.","Total de ingresos: S/ 38,500.00."],
+    assets:["Bien inmueble: Terreno — Urbanización 'la Campiña' Mz. e - Lt. 4 - Distrito de Santa María - Provincia de Huaura - Departamento de Lima — S/ 25,000.00.","Bien inmueble: Terreno — Proyecto de Habilitación Urbana 'Mirasol - I Etapa' Mz. C - Lt. 1 - Distrito de Hualmay - Provincia de Huaura - Departamento de Lima — S/ 8,200.00.","Bienes muebles y acciones: el detalle completo no aparece en las capturas recuperadas."],
+    source:"Datos personales y hoja de vida: Voto Informado del Jurado Nacional de Elecciones (JNE), según las capturas proporcionadas."
+  },
+  {
+    name:"Andrés Eduardo Tello Velazco", party:"Partido Democrático Somos Perú", image:"https://voz-electoral.vercel.app/fotos/345343.jpg", logo:"https://voz-electoral.vercel.app/simbolos/PARTIDO_DEMOCRATICO_SOMOS_PERU.jpg",
+    personal:["Cargo al que postula: Gobernador Regional","DNI: 09076396","Sexo: Hombre","Fecha de nacimiento: 23/10/1960 (65 años)","Lugar de nacimiento: Lima, Lima, Lima — Perú","Postula en: Lima"],
+    education:["Educación: el detalle de estudios no aparece en las capturas recuperadas para esta versión."],
+    work:["Estudio Jurídico - Andres Tello — Abogado Titular — 2011-2026 — Manzana 3, Lote 13, Urb. Huarachi — Lima, Cañete, Chilca.","Supera - T Sac — Gerente — 2011-2024 — Av. Manuel Holguín 571 Interior 202, San Borja — Lima, Lima, San Borja. RUC: 20571162939."],
+    political:["Adherente Fundacional — Partido Aprista Peruano — 2004-2014.","Comité Ejecutivo Nacional - Dimensión del Estado — Partido Aprista Peruano — 2004-2010.","Renuncia a organizaciones políticas: Partido Aprista Peruano — renunció en 2014.","Renuncia a organizaciones políticas: Podemos Perú — renunció en 2023."],
+    sentences:["No tiene sentencias firmes según su declaración jurada de hoja de vida."],
+    income:["Año declarado: 2025.","Remuneración bruta anual: sector público S/ 0.00; sector privado S/ 0.00; total S/ 0.00.","Renta bruta anual por ejercicio individual: sector público S/ 0.00; sector privado S/ 115,105.00; total S/ 115,105.00.","Otros ingresos anuales: sector público S/ 0.00; sector privado S/ 40,000.00; total S/ 40,000.00.","Total de ingresos: sector público S/ 0.00; sector privado S/ 155,105.00; total S/ 155,105.00."],
+    assets:["Bien inmueble: Registro de Predios — Cañete-Chilca — Mz 3 Lote 1 - Centro Poblado Chilca — S/ 776,120.29.","Bien mueble: Azul — placa CSX258 — S/ 30,000.00.","Acciones y participaciones: Supera - T Sac — 120 acciones de un total de 200 acciones — S/ 1,200.00.","Información adicional: consulta al Sistema de Expedientes civiles archivados y Mesa de Partes Electrónica del Poder Judicial, con referencias a expedientes civiles y por retardo de justicia consignadas en la declaración; el texto de la captura indica que se trata de referencias registradas y no las presenta como sentencias firmes."],
+    source:"Datos personales y hoja de vida: Voto Informado del Jurado Nacional de Elecciones (JNE), según las capturas proporcionadas."
+  },
+  {
+    name:"Javier Jesús Alvarado Gonzales del Valle", party:"Alianza Renovación Popular y Toro", image:"https://www.datosperu.org/electoral-archivos/RENOVACION%20POPULAR/fotos/ALVARADO%20GONZALES%20DEL%20VALLE%20JAVIER%20JESUS.jpg", logo:"https://sroppublico.jne.gob.pe/Consulta/Simbolo/GetSimbolo/3034",
+    personal:["Cargo al que postula: Gobernador Regional","DNI: 15384812","Sexo: Hombre","Fecha de nacimiento: 05/04/1968 (58 años)","Lugar de nacimiento: Callao, Callao, Bellavista — Perú","Postula en: Lima"],
+    education:["Educación básica: Sí. Primaria concluida y secundaria concluida.","Estudios técnicos: No registra estudios técnicos según su declaración jurada de hoja de vida.","Estudios no universitarios: No registra estudios no universitarios según su declaración jurada de hoja de vida.","Estudios universitarios: Ingeniería Industrial — Universidad Inca Garcilaso de la Vega. No concluido.","Estudios de posgrado: No registra estudios de posgrado según su declaración jurada de hoja de vida."],
+    work:["Deportes de Aventura Peru e.I.R.L. — Gerente — 2016-2025 — Av. Condoray S/N — Lima, Cañete, Lunahuaná. RUC: 20601081017."],
+    political:["Representante Legal — Patria Joven — 2006-2011.","Fundador — Patria Joven — 2006-2011.","Gobernador Regional — Patria Joven — 2011-2014.","Alcalde Provincial — Patria Joven — 2007-2010."],
+    sentences:["No registra sentencias firmes según la declaración presentada al JNE."],
+    income:["Año declarado: 2025.","Remuneración bruta anual: sector público S/ 0.00; sector privado S/ 0.00; total S/ 0.00.","Otros ingresos anuales: sector público S/ 0.00; sector privado S/ 22,325.00; total S/ 22,325.00.","Total de ingresos: sector público S/ 0.00; sector privado S/ 22,325.00; total S/ 22,325.00."],
+    assets:["Bien inmueble: Lote de Terreno Rústico Lunahuaná - Cañete - Lima — S/ 0.00.","Bien inmueble: Zona Registral IX - Sede Lima Oficina: Cañete — S/ 25,000.00.","Bien inmueble: Zona Registral IX - Sede Lima Oficina: Cañete — S/ 0.00.","Bien inmueble: Avenida 9 de Octubre N° 783 Huacho - Huaura - Lima — S/ 51,586.98.","Bien inmueble: Estacionamiento N° 4, Av. 9 de Octubre N° 888 - Dos de Mayo — S/ 7,842.20.","Bien mueble: Camioneta Nissan, modelo F..., año 1992, placa OQ4677 — S/ 10,000.00.","Bien mueble: Camioneta Chevrolet, año 1969, placa BYM917 — S/ 7,000.00.","Bien mueble: Combi Foton, año 2011, placa B1A955 — S/ 22,000.00."],
+    source:"Datos personales y hoja de vida: Voto Informado del Jurado Nacional de Elecciones (JNE), según las capturas y textos proporcionados."
+  },
+  {
+    name:"César Ismael Zapata Bellón", party:"Ahora Nación - AN", image:"https://voz-electoral.vercel.app/fotos/322056.jpg", logo:"https://voz-electoral.vercel.app/simbolos/AHORA_NACION___AN.jpg",
+    personal:["Cargo al que postula: Gobernador Regional","DNI: 15739235","Sexo: Hombre","Fecha de nacimiento: 25/07/1976 (50 años)","Lugar de nacimiento: Lima, Huaura, Huacho — Perú","Postula en: Lima"],
+    education:["Educación básica: Sí. Primaria concluida y secundaria concluida.","Estudios técnicos: No registra.","Estudios no universitarios: No registra.","Estudios universitarios: Ingeniería Industrial — Universidad Nacional José Faustino Sánchez Carrión. Concluido/Egresado. Bachiller: 2007.","Estudios universitarios: Bachiller en Ingeniería Industrial — Universidad Nacional José Faustino Sánchez Carrión. Concluido/Egresado. Bachiller: 2002.","Estudios de posgrado: Gestión Pública — Universidad Nacional José Faustino Sánchez Carrión. Concluido/Egresado; observación: egresado de la maestría en 2024."],
+    work:["Gobierno Regional de Lima — Director de Producción — 2023-2026 — Av. Circunvalación S/N, Huaura, Huacho. RUC: 20530688390."],
+    political:["Secretario de Producción y Mypes — Partido Aprista Peruano — 2017-2018.","Renuncia a Alianza Para el Progreso — 2025.","Renuncia a Renovación Popular — 2023."],
+    sentences:["No registra sentencias firmes según su declaración."],
+    income:["Año declarado: 2025.","Remuneración bruta anual: sector público S/ 88,000.00; sector privado S/ 13,560.00; total S/ 101,560.00."],
+    assets:["Bien inmueble: Calle Mantaro N° 518 Módulo 6 Dpto. 302 Tercer Piso Cc.Hh. Conjunto Habitacional Montemar, La Perla - Callao - Lima — S/ 204,000.00.","Bienes muebles: no registra.","Acciones y participaciones: Z&Z Consulting Group S.A.C. — 4,000 acciones — 50% de la empresa — valor S/ 1.00.","Información adicional: no registra.","Anotación marginal: no registra."],
+    source:"Declaración jurada de hoja de vida presentada por el candidato al Jurado Nacional de Elecciones (JNE)."
+  },
+  {
+    name:"Críspulo Eddie Jara Salazar", party:"Concertación Para el Desarrollo Regional - Lima", image:"https://voz-electoral.vercel.app/fotos/260917.jpg", logo:"https://voz-electoral.vercel.app/simbolos/CONCERTACION_PARA_EL_DESARROLLO_REGIONAL___LIMA.jpg",
+    personal:["Cargo al que postula: Gobernador Regional","DNI: 15646398","Sexo: Hombre","Fecha de nacimiento: 23/04/1959 (67 años)","Lugar de nacimiento: Lima, Huaura, Sayán — Perú","Postula en: Lima"],
+    education:["Educación básica: Sí. Primaria concluida y secundaria concluida.","Estudios técnicos: No registra estudios técnicos según su declaración jurada de hoja de vida.","Estudios no universitarios: No registra estudios no universitarios según su declaración jurada de hoja de vida.","Estudios universitarios: Licenciado en Educación Biología-Química — Universidad José Faustino Sánchez Carrión. Concluido, egresado. Bachiller: 2003.","Estudios de posgrado: No registra estudios de posgrado según su declaración jurada de hoja de vida."],
+    work:["Ventura Ccalamaqui — Docente — 2023-2024 — Jirón Sáenz Peña - Barranca — Lima, Barranca, Barranca. RUC: 20361600470.","Municipalidad Provincial de Huaura — Alcalde Provincial — 2019-2021 — Calle Colón N° 150 Plaza de Armas — Lima, Huaura, Huacho. RUC: 20141418557.","Municipalidad Distrital de Hualmay — Alcalde Distrital — 2007-2018 — Jr. Florián Díaz N° 499 — Lima, Huaura, Hualmay. RUC: 20148241385."],
+    political:["Alcalde Provincial — Concertación Para el Desarrollo Regional - Lima — 2019-2022.","Alcalde Distrital — Concertación Para el Desarrollo Regional - Lima — 2015-2018.","Renuncia a Todos Por el Perú — 2006."],
+    sentences:["Sentencias penales (1): Retardo Injustificado en el Pago.","Reserva de Fallo Condenatorio. Juzgado: 2Do Juzgado Penal Unipersonal - Huacho.","Expediente: 00804-2009-69-1308-JR-PE-01.","Fecha de sentencia: 28/03/2010. Modalidad: Reserva de Fallo. Cumplimiento: Pena Cumplida."],
+    income:["Año declarado: 2025.","Remuneración bruta anual: sector público S/ 95,537.84; sector privado S/ 0.00; total S/ 95,537.84.","Renta bruta anual por ejercicio individual: S/ 0.00.","Otros ingresos anuales: S/ 0.00.","Total de ingresos: S/ 95,537.84."],
+    assets:["Bien inmueble: Registro de Predios — Calle Santa Rosa S/N Hualmay - Huaura - Lima — S/ 14,814.50.","Bien mueble: Camioneta Toyota Hilux - Sur Color Plata - Año 1996 — C0G521 — S/ 20,000.00.","Bien mueble: Minivan Jac Refine 1.9 Cti Diesel Color Negro — Año 2025 — CRU410 — S/ 82,000.00.","Acciones y participaciones: No registra según su declaración jurada de hoja de vida.","Información adicional: No registra.","Anotación marginal: No registra."],
+    source:"Declaración jurada de hoja de vida presentada por el candidato al Jurado Nacional de Elecciones (JNE)."
+  }
+];
+const candidateSections = document.getElementById("candidateSections");
+
+candidatos.forEach((c,i)=>{
+  const el=document.createElement("article");
+  el.className="candidate-section";
+  el.id=`candidato-${i+1}`;
+  el.innerHTML=`
+    <div class="candidate-header"><div><div class="candidate-number">CANDIDATO ${i+1}</div><h3>${c.name}</h3><div class="candidate-party">${c.party}</div></div></div>
+    <div class="candidate-visual"><img class="candidate-photo" src="${c.image}" alt="Foto de ${c.name}"><div><div style="font-size:12px;color:#8f9ab0;margin-bottom:7px;">INSIGNIA</div><img class="party-logo" src="${c.logo}" alt="Insignia de ${c.party}"></div></div>
+    <div class="candidate-content">
+      ${[["Datos personales",c.personal],["Educación",c.education],["Experiencia laboral",c.work],["Trayectoria partidaria y renuncias",c.political],["Declaración de sentencias firmes",c.sentences],["Ingreso de bienes y rentas",c.income],["Bienes muebles e inmuebles y otras declaraciones",c.assets]].map(([title,items])=>`<div class="candidate-box themes"><h4>📌 ${title}</h4><ul>${items.map(x=>`<li>${x}</li>`).join("")}</ul></div>`).join("")}
+    </div>
+    <div class="candidate-source"><strong>Fuente:</strong> ${c.source}</div>`;
+  candidateSections.appendChild(el);
+});
+
+function showHome(){
+  document.getElementById("inicio").style.display = "flex";
+  document.getElementById("candidatos").style.display = "none";
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function showOnlyCandidate(number){
+  document.getElementById("inicio").style.display = "none";
+  document.getElementById("candidatos").style.display = "block";
+
+  document.querySelectorAll(".candidate-section").forEach(section=>{
+    section.classList.remove("active");
+  });
+
+  const selected = document.getElementById(`candidato-${number}`);
+  if(selected){
+    selected.classList.add("active");
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+}
+
+document.getElementById("candidatos").style.display = "none";
+</script>
+</body>
+</html>
