@@ -135,6 +135,18 @@
     section{padding:70px 5%}
     h1{font-size:48px}
   }
+ @media (max-width: 768px){
+  nav, header nav {
+    display: flex !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    gap: 15px;
+    padding-bottom: 8px;
+    justify-content: flex-start !important;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { flex-shrink: 0; }
+}
 </style>
 </head>
 <body>
